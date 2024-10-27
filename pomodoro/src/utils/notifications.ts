@@ -26,3 +26,24 @@ export const notifyUser = async (notificationText: string) => {
         }, 5000);
     }
 };
+
+export const changeTabTile = (tabTitle: string = "Pomodoro Timer") => {
+    document.title = tabTitle;
+};
+
+export const changeTabIcon = (tabIcon: string = "favicon.ico") => {
+    let link = document.querySelector("link[rel~='icon']");
+    if (!link) {
+        link = document.createElement("link");
+        link.setAttribute("rel", "icon");
+        document.getElementsByTagName("head")[0].appendChild(link);
+    }
+    link.setAttribute("href", tabIcon);
+    if (tabIcon !== "favicon.ico") {
+        // Optional: Set type for SVG icons
+        link.setAttribute("type", "image/svg+xml");
+
+        // Optional: Cache busting with a unique query parameter
+        link.setAttribute("href", `${tabIcon}`);
+    }
+};

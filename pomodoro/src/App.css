@@ -1,0 +1,26 @@
+:root {
+    --text-main: rgb(237, 236, 236);
+    --background-hover: rgb(255 255 255 / 0.1);
+}
+
+.light-theme {
+    --text-main: rgb(0,0,0);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 0.625rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.App {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-size: 1.6rem;
+}
