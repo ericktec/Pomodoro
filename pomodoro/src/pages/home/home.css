@@ -1,5 +1,6 @@
 .home {
     display: flex;
+    align-items: center;
     flex-direction: column;
     flex: 1;
     padding: 2rem 1rem;
@@ -8,7 +9,7 @@
 }
 
 .home__overlay {
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0,0,0,0.6);
 }
 
 .home__background {
@@ -26,16 +27,21 @@
     justify-content: space-between;
 }
 
-.home__timer, .home__timer-controllers {
-    align-self: center;
-}
-
 .home__timer {
-    flex: 0 0, 70vh;
+    display: flex;
+    flex: 0 0, 50vh;
+    justify-content: center;
+    align-items: center;
 }
 
 
 .home__timer-controllers {
     display: flex;
+    margin-top: auto;
     gap: 3rem;
+}
+
+.home__background-blue-purple {
+    background: rgb(36,9,121);
+    background: linear-gradient(356deg, rgba(36,9,121,1) 0%, rgba(72,12,130,1) 50%, rgba(69,3,84,1) 100%);
 }

@@ -1,0 +1,30 @@
+.timerController__btn {
+    color: var(--text-main);
+    text-shadow: var(--font-border);
+    border: 1px solid var(--btn-border-primary);
+    border-radius: 100%;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+    background: transparent;
+}
+
+.timerController__btn-secondary {
+    padding: 1rem;
+    width: 10rem;
+    height: 10rem;
+}
+
+.timerController__btn-primary {
+    padding: 2rem;
+    width: 15rem;
+    height: 15rem;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.timerController__btn-img {
+    font-size: 3rem;
+}

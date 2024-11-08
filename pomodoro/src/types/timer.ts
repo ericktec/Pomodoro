@@ -12,6 +12,7 @@ export type TimerContextDispatchersValue = {
     setRestTime: (time: number) => void;
     setLongRestTime: (time: number) => void;
     startTimer: () => void;
+    stopTimer: () => void;
 };
 
 // Communication to worker
@@ -43,12 +44,10 @@ export type MessageTick = {
 
 export type StopTimerMessage = {
     event: "stopTimer";
-    payload: null;
 };
 
 export type TimerStoppedMessage = {
     event: "stoppedTimer";
-    payload: null;
 };
 
 export type TimerCompleted = {

@@ -28,13 +28,11 @@ const worker = () => {
         stopTimer() {
             if (this.interval) {
                 clearInterval(this.interval);
+                this.interval = null;
             }
-            const message: TimerStoppedMessage = {
-                event: "stoppedTimer",
-                payload: null,
-            };
 
-            self.postMessage(message);
+            this.now = null;
+            this.startAt = null;
         }
 
         setupTimer({ duration, type }: SetupTimerMessage["payload"]) {
@@ -47,7 +45,6 @@ const worker = () => {
             this.startAt = startAt;
 
             this.interval = setInterval(() => {
-                console.log("interval");
                 this.now = new Date().getTime();
                 this.tick();
             }, 1000);
@@ -60,9 +57,8 @@ const worker = () => {
             };
             self.postMessage(message);
 
-            if (this.countdown <= 0 && this.interval) {
-                clearInterval(this.interval);
-                this.interval = null;
+            if (this.countdown <= 0) {
+                this.stopTimer();
             }
         }
 
@@ -93,6 +89,10 @@ const worker = () => {
 
             case "startTimer": {
                 timer.startTimer(message.data.payload);
+                break;
+            }
+            case "stopTimer": {
+                timer.stopTimer();
                 break;
             }
             default:

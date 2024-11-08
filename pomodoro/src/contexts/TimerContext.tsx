@@ -18,12 +18,12 @@ import timerWorker from "../workers/timer.worker";
 import {
     SetupTimerMessage,
     StartTimerMessage,
+    StopTimerMessage,
     TimerContextDispatchersValue,
     TimerContextValue,
     TimerTypes,
     TimerWorkerMessage,
 } from "../types/timer";
-import { eventNames } from "process";
 
 export const TimerContext = createContext<TimerContextValue>({
     isTimerRunning: false,
@@ -38,6 +38,7 @@ export const TimerControllersContext =
         setWorkingTime: () => {},
         setLongRestTime: () => {},
         startTimer: () => {},
+        stopTimer: () => {},
     });
 
 const setupTimer = (
@@ -93,11 +94,6 @@ const TimerProvider = ({ children }: Props) => {
             switch (event.data.event) {
                 case "tick": {
                     setRemainingTime(event.data.payload);
-                    break;
-                }
-
-                case "stoppedTimer": {
-                    setIsTimerRunning(false);
                     break;
                 }
 
@@ -192,6 +188,31 @@ const TimerProvider = ({ children }: Props) => {
         setIsTimerRunning(true);
     }, []);
 
+    const stopTimer = useCallback(() => {
+        const message: StopTimerMessage = {
+            event: "stopTimer",
+        };
+        timerWorkerRef.current?.postMessage(message);
+        setIsTimerRunning(false);
+
+        switch (periodType) {
+            case "pomodoroPeriod":
+                setRemainingTime(workTime);
+                break;
+
+            case "break":
+                setRemainingTime(breakTime);
+                break;
+
+            case "longBreak":
+                setRemainingTime(longBreakTime);
+                break;
+
+            default:
+                break;
+        }
+    }, [periodType, longBreakTime, workTime, breakTime]);
+
     const setWorkingTime = useCallback(
         (time: number) => {
             if (
@@ -218,8 +239,9 @@ const TimerProvider = ({ children }: Props) => {
             setLongRestTime,
             startTimer,
             setupTimer,
+            stopTimer,
         }),
-        [setWorkingTime, setLongRestTime, startTimer, setRestTime]
+        [setWorkingTime, setLongRestTime, startTimer, setRestTime, stopTimer]
     );
 
     return (

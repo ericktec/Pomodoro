@@ -1,16 +1,37 @@
+import "./timerController.css";
 import { HTMLProps, useContext } from "react";
-import { TimerControllersContext } from "../../contexts/TimerContext";
+import {
+    TimerContext,
+    TimerControllersContext,
+} from "../../contexts/TimerContext";
 
 type Props = {} & HTMLProps<HTMLDivElement>;
 const TimerControllers = ({ ...props }: Props) => {
-    const { startTimer, setWorkingTime } = useContext(TimerControllersContext);
+    const { startTimer, stopTimer } = useContext(TimerControllersContext);
+    const { isTimerRunning } = useContext(TimerContext);
     return (
         <div {...props}>
-            <button className="timerController__btn">Music</button>
-            <button className="timerController__btn" onClick={startTimer}>
-                Start
+            <button className="timerController__btn timerController__btn-secondary">
+                <i className="timerController__btn-img icofont-music"></i>
             </button>
-            <button className="timerController__btn">Todo list</button>
+            {!isTimerRunning ? (
+                <button
+                    className="timerController__btn timerController__btn-primary"
+                    onClick={startTimer}
+                >
+                    Start
+                </button>
+            ) : (
+                <button
+                    className="timerController__btn timerController__btn-primary"
+                    onClick={stopTimer}
+                >
+                    Stop
+                </button>
+            )}
+            <button className="timerController__btn timerController__btn-secondary">
+                Todo list
+            </button>
         </div>
     );
 };
