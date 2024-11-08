@@ -9,7 +9,7 @@
 @font-face
 {
  
-font-family: "IcoFont";
+  font-family: "IcoFont";
 font-weight: normal;
 font-style: "Regular";
 src: url("./fonts/icofont.woff2") format("woff2"),
@@ -538,11 +538,6 @@ url("./fonts/icofont.woff") format("woff");
   content: "\eca2";
 }
 
-.icofont-music:before
-{
-  content: "\eca3";
-}
-
 .icofont-mute-volume:before
 {
   content: "\eca4";
@@ -661,6 +656,91 @@ url("./fonts/icofont.woff") format("woff");
 .icofont-youtube-play:before
 {
   content: "\ecbb";
+}
+
+.icofont-music:before
+{
+  content: "\eca3";
+}
+
+.icofont-duotone.icofont-list-thin:before
+{
+  content: "\13b52";
+}
+
+.icofont-duotone.icofont-list-thin:after
+{
+  content: "\13b51";
+}
+
+.icofont-edit-alt:before
+{
+  content: "\eded";
+}
+
+.icofont-trash:before
+{
+  content: "\ee09";
+}
+
+.icofont-duotone.icofont-plus-circle:before
+{
+  content: "\13b8b";
+}
+
+.icofont-duotone.icofont-plus-circle:after
+{
+  content: "\13b8a";
+}
+
+.icofont-plus:before
+{
+  content: "\efc2";
+}
+
+.icofont-clock-time:before
+{
+  content: "\eedc";
+}
+
+.icofont-alarm:before
+{
+  content: "\eea3";
+}
+
+.icofont-redo:before
+{
+  content: "\edfe";
+}
+
+.icofont-duotone.icofont-notification-circle:before
+{
+  content: "\13b75";
+}
+
+.icofont-duotone.icofont-notification-circle:after
+{
+  content: "\13b74";
+}
+
+.icofont-duotone.icofont-notification:before
+{
+  content: "\13d14";
+}
+
+.icofont-duotone.icofont-notification:after
+{
+  content: "\13cf5";
+}
+
+.icofont-image:before
+{
+  content: "\ef4b";
+}
+
+.icofont-world:before
+{
+  content: "\f02c";
 }
 
 [class^="icofont-"].icofont-duotone,

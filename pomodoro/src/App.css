@@ -1,6 +1,10 @@
 :root {
+    --background-color-primary: rgb(255, 255, 255);
+    --background-hover-secondary: rgba(146, 146, 146, 0.2);
     --text-main: rgb(237, 236, 236);
-    --background-hover: rgb(255 255 255 / 0.1);
+    --text-secondary: rgb(40, 37, 37);
+    --background-hover: rgba(213, 213, 213, 0.1);
+    --background-high-contrast: rgb(0,0,0);
     --btn-border-primary: rgb(255, 255, 255);
     --font-border:  -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
@@ -8,8 +12,6 @@
 .light-theme {
     --text-main: rgb(0,0,0);
 }
-
-
 
 @font-face {
 
@@ -26,6 +28,19 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Fira Sans';
+    src: url('../public/fonts/Fira_Sans/FiraSans-Light.ttf');
+    font-weight: lighter;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fira Sans';
+    src: url('../public/fonts/Fira_Sans/FiraSans-SemiBold.ttf');
+    font-weight: 100;
+    font-style: normal;
+}
 
 *, *::before, *::after {
     box-sizing: border-box;

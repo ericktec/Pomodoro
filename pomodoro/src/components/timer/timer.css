@@ -1,5 +1,6 @@
 
 .timer {
+    font-weight: bold;
     font-size: 20rem;
     text-shadow: var(--font-border);
 }

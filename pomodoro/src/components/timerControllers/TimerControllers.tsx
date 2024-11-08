@@ -4,6 +4,7 @@ import {
     TimerContext,
     TimerControllersContext,
 } from "../../contexts/TimerContext";
+import Tooltip from "../tooltip/Tooltip";
 
 type Props = {} & HTMLProps<HTMLDivElement>;
 const TimerControllers = ({ ...props }: Props) => {
@@ -13,7 +14,9 @@ const TimerControllers = ({ ...props }: Props) => {
         <div {...props}>
             <button className="timerController__btn timerController__btn-secondary">
                 <i className="timerController__btn-img icofont-music"></i>
+                <Tooltip>Music</Tooltip>
             </button>
+
             {!isTimerRunning ? (
                 <button
                     className="timerController__btn timerController__btn-primary"
@@ -29,8 +32,10 @@ const TimerControllers = ({ ...props }: Props) => {
                     Stop
                 </button>
             )}
+
             <button className="timerController__btn timerController__btn-secondary">
-                Todo list
+                <Tooltip>To Do List</Tooltip>
+                <i className="timerController__btn-img icofont-duotone icofont-list-thin"></i>
             </button>
         </div>
     );

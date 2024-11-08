@@ -1,4 +1,5 @@
 .timerController__btn {
+    position: relative;
     color: var(--text-main);
     text-shadow: var(--font-border);
     border: 1px solid var(--btn-border-primary);
@@ -9,6 +10,15 @@
     cursor: pointer;
     justify-content: center;
     background: transparent;
+    transition: transform ease-in 0.2s;
+}
+
+.timerController__btn:active {
+    transform: scale(0.9);
+}
+
+.timerController__btn:hover > .tooltip {
+    opacity: 1;
 }
 
 .timerController__btn-secondary {

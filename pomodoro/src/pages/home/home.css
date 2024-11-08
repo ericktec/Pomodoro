@@ -3,7 +3,7 @@
     align-items: center;
     flex-direction: column;
     flex: 1;
-    padding: 2rem 1rem;
+    padding: 2rem 4rem;
     user-select: none;
     color: var(--text-main);
 }
@@ -24,7 +24,14 @@
 
 .home__header {
     display: flex;
+    align-self: stretch;
     justify-content: space-between;
+    align-items: center;
+}
+
+.home__username {
+    font-size: 3rem;
+    font-weight: bold;
 }
 
 .home__timer {
@@ -44,4 +51,8 @@
 .home__background-blue-purple {
     background: rgb(36,9,121);
     background: linear-gradient(356deg, rgba(36,9,121,1) 0%, rgba(72,12,130,1) 50%, rgba(69,3,84,1) 100%);
+}
+
+.home__mantra {
+    font-weight: bold;
 }

@@ -5,6 +5,7 @@ import TimerControllers from "../../components/timerControllers/TimerControllers
 import "./home.css";
 import { TimerContext } from "../../contexts/TimerContext";
 import { BackgroundTypes } from "../../types/backgrounds";
+import HomeMenu from "../../components/homeMenu/HomeMenu";
 
 const Home = () => {
     const { remainingTimeFormatted } = useContext(TimerContext);
@@ -38,9 +39,9 @@ const Home = () => {
                 />
             )}
             <div className="home__header">
-                <span></span>
+                <p className="home__username">{"Erick"}</p>
                 <PomodoroCounters />
-                <span></span>
+                <HomeMenu />
             </div>
             <Timer
                 className="home__timer"

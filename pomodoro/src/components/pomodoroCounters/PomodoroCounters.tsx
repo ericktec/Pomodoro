@@ -29,16 +29,20 @@ const PomodoroCounters = () => {
 
     return (
         <div className="pomodoro__counters">
-            {counters.map((counter) => (
-                <span
+            {counters.map((counter, i) => (
+                <div
+                    key={i}
                     className={`pomodoro__counter ${
                         isTimerRunning
                             ? "pomodoro__counter--noClickable"
                             : "pomodoro__counter--clickable"
                     }`}
                 >
-                    {counter.count} {counter.label}
-                </span>
+                    <span className="pomodoro__counter-count">
+                        {counter.count}
+                    </span>{" "}
+                    <span>{counter.label}</span>
+                </div>
             ))}
         </div>
     );
