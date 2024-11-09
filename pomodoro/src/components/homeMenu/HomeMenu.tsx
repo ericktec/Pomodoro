@@ -1,10 +1,22 @@
 import { useRef, useState } from "react";
 import "./homeMenu.css";
+import SettingsMenu from "../settingsMenu/SettingsMenu";
+import SettingsHeader from "../settingsMenu/SettingsHeader";
+import BackgroundPicker from "../backgroundPicker/BackgroundPicker";
 
 type TransitionsType = "open" | "opening" | "closing" | "close";
 
+type TabSelected = "settings" | "backgroundPicker";
+
+const tabsTitles = {
+    settings: "Settings",
+    backgroundPicker: "Background",
+};
+
 const HomeMenu = () => {
     const [open, setOpen] = useState<TransitionsType>("close");
+    const [tabSelected, setTabSelected] = useState<TabSelected>("settings");
+
     const transitionIntervalRef = useRef<ReturnType<typeof setTimeout> | null>(
         null
     );
@@ -33,6 +45,10 @@ const HomeMenu = () => {
         }, 100);
     };
 
+    const onGoBackHandler = () => {
+        setTabSelected("settings");
+    };
+
     const shouldOpen =
         open === "opening" || open === "open" || open === "closing";
 
@@ -49,44 +65,47 @@ const HomeMenu = () => {
 
             {shouldOpen && (
                 <menu className={`menu ${menuClass}`}>
-                    <section className="menu__header">
-                        <ul className="menu__header-list">
-                            <li className="menu__element">
-                                <i className="icofont-image"></i>
-                                <span>Background</span>
-                            </li>
-                            <li className="menu__element">
-                                <i className="icofont-world"></i>
-                                <span>Language</span>
-                            </li>
+                    <SettingsHeader
+                        onCloseMenuHandler={onCloseMenuHandler}
+                        setTabSelected={setTabSelected}
+                    >
+                        {tabSelected === "settings" && (
+                            <>
+                                <li
+                                    className="menu__element"
+                                    onClick={() =>
+                                        setTabSelected("backgroundPicker")
+                                    }
+                                >
+                                    <i className="icofont-image"></i>
+                                    <span>Background</span>
+                                </li>
+                                <li className="menu__element">
+                                    <i className="icofont-world"></i>
+                                    <span>Language</span>
+                                </li>
+                            </>
+                        )}
+                        {tabSelected !== "settings" && (
                             <li
-                                className="menu__header-close"
-                                onClick={onCloseMenuHandler}
+                                className="menu__element"
+                                onClick={onGoBackHandler}
                             >
-                                <i className="icofont-ui-close"></i>
+                                <i className="icofont-simple-left home__menu-back-btn"></i>
+                                <span className="menu__title">
+                                    {tabsTitles[tabSelected]}
+                                </span>
                             </li>
-                        </ul>
+                        )}
+                    </SettingsHeader>
 
-                        <ul className="menu__timerOptions">
-                            <li className="menu__timerOptionsElement">
-                                <i className="icofont-clock-time"></i>
-                                Concentration time
-                            </li>
-                            <li className="menu__timerOptionsElement">
-                                <i className="icofont-alarm"></i>
-                                Alarm
-                            </li>
-
-                            <li className="menu__timerOptionsElement">
-                                <i className="icofont-redo"></i>
-                                Auto Start
-                            </li>
-
-                            <li className="menu__timerOptionsElement">
-                                <i className="icofont-duotone icofont-notification-circle"></i>
-                                Notifications
-                            </li>
-                        </ul>
+                    <section>
+                        {tabSelected === "settings" && (
+                            <SettingsMenu setTabSelected={setTabSelected} />
+                        )}
+                        {tabSelected === "backgroundPicker" && (
+                            <BackgroundPicker />
+                        )}
                     </section>
                 </menu>
             )}

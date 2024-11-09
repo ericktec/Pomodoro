@@ -79,11 +79,28 @@
     background-color: var(--background-hover-secondary);
     border-radius: 1rem;
 }
-
+.home__menu-back-btn,
 .menu__header-close {
     cursor: pointer;
-    font-size: 2rem;
     margin-left: auto;
+    transition: transform linear 0.2s;
+}
+
+.menu__header-close {
+    font-size: 2rem;
+}
+
+.menu__title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.menu__header-close:hover {
+    transform: scale(1.1) rotate(1deg);
+}
+
+.home__menu-back-btn {
+    font-size: 3rem;
 }
 
 .menu__header-close:hover {

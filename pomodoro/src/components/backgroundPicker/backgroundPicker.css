@@ -1,0 +1,25 @@
+.backgroundPicker__list {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.backgroundPicker__item {
+    cursor: pointer;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 1rem;
+    transition: all 0.2s ease-in-out;
+    transform: perspective(800px);
+}
+
+.backgroundPicker__item:hover {
+    transform: perspective(800px) rotateY(20deg);
+}
+
+.backgroundPicker__title {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}

@@ -48,10 +48,6 @@
     gap: 3rem;
 }
 
-.home__background-blue-purple {
-    background: rgb(36,9,121);
-    background: linear-gradient(356deg, rgba(36,9,121,1) 0%, rgba(72,12,130,1) 50%, rgba(69,3,84,1) 100%);
-}
 
 .home__mantra {
     font-weight: bold;

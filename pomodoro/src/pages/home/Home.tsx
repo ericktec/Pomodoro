@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useMemo, useContext, useEffect, useState } from "react";
 import PomodoroCounters from "../../components/pomodoroCounters/PomodoroCounters";
 import Timer from "../../components/timer/Timer";
 import TimerControllers from "../../components/timerControllers/TimerControllers";
@@ -6,6 +6,7 @@ import "./home.css";
 import { TimerContext } from "../../contexts/TimerContext";
 import { BackgroundTypes } from "../../types/backgrounds";
 import HomeMenu from "../../components/homeMenu/HomeMenu";
+import HomeBackGroundContext from "../../contexts/HomeBackgroundContext";
 
 const Home = () => {
     const { remainingTimeFormatted } = useContext(TimerContext);
@@ -19,10 +20,19 @@ const Home = () => {
         return {
             type: "gradient",
             className: "home__background-blue-purple",
-            // type: "image",
-            // path: "background.png",
         };
     });
+
+    const setHomeBackground = useCallback((background: BackgroundTypes) => {
+        setBackground(background);
+    }, []);
+
+    const backgroundContextValue = useMemo(
+        () => ({
+            setBackground: setHomeBackground,
+        }),
+        [setHomeBackground]
+    );
 
     return (
         <div
@@ -41,7 +51,9 @@ const Home = () => {
             <div className="home__header">
                 <p className="home__username">{"Erick"}</p>
                 <PomodoroCounters />
-                <HomeMenu />
+                <HomeBackGroundContext.Provider value={backgroundContextValue}>
+                    <HomeMenu />
+                </HomeBackGroundContext.Provider>
             </div>
             <Timer
                 className="home__timer"
