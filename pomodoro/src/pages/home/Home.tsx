@@ -24,6 +24,7 @@ const Home = () => {
     });
 
     const setHomeBackground = useCallback((background: BackgroundTypes) => {
+        localStorage.setItem("background", JSON.stringify(background));
         setBackground(background);
     }, []);
 

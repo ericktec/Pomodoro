@@ -1,0 +1,7 @@
+.concentrationTimeSettings {
+}
+
+.concentrationTimeSettings__item {
+    display: flex;
+    gap: 1rem;
+}

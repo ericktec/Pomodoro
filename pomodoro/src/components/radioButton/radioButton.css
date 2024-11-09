@@ -1,0 +1,22 @@
+.radioButtonInput  {
+    display: none;
+}
+
+
+.radioButton {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 100%;
+}
+
+.radioButton::after {
+    content: "";
+    display: block;
+    background-color: red;
+    width: 90%;
+    border-radius: 100%;
+}
+
+.radioButtonInput:checked ~ .radioButton::after {
+    background-color: red;
+}
