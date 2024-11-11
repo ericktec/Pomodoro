@@ -13,7 +13,6 @@ import {
     changeTabTile,
     notifyUser,
 } from "../utils/notifications";
-import LoadingSpinner from "../components/loadingSpinner/LoadingSpinner";
 
 import timerWorker from "../workers/timer.worker";
 import {
@@ -110,7 +109,8 @@ const TimerProvider = ({ children }: Props) => {
         ) => {
             switch (event.data.event) {
                 case "tick": {
-                    setRemainingTime(event.data.payload);
+                    setRemainingTime(event.data.payload.countDown);
+                    changeTabIcon(event.data.payload.icon);
                     break;
                 }
 
@@ -157,19 +157,14 @@ const TimerProvider = ({ children }: Props) => {
         return `${minutes}:${seconds}`;
     }, [remainingTime]);
 
-    // useEffect(() => {
-    //     if (!isTimerRunning) {
-    //         changeTabTile();
-    //         changeTabIcon();
-    //     } else {
-    //         changeTabTile(`${remainingTimeFormatted} Pomodoro`);
-    //         const percentage = (1 - remainingTime / time) * 100;
-    //         const svg = `data:image/svg+xml;base64,${btoa(
-    //             LoadingSpinner(percentage)
-    //         )}`;
-    //         changeTabIcon(svg);
-    //     }
-    // }, [remainingTimeFormatted, isTimerRunning, remainingTime]);
+    useEffect(() => {
+        if (isTimerRunning) {
+            changeTabTile(remainingTimeFormatted);
+        } else {
+            changeTabTile();
+            changeTabIcon();
+        }
+    }, [remainingTimeFormatted, isTimerRunning]);
 
     const timerContextValue = useMemo(
         () => ({

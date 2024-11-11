@@ -1,4 +1,5 @@
 /* eslint-disable no-restricted-globals */
+import LoadingSpinner from "../components/loadingSpinner/LoadingSpinner";
 import {
     MessageReady,
     MessageTick,
@@ -10,6 +11,7 @@ import {
 } from "../types/timer";
 
 const worker = () => {
+    const fullStrokeDashOffset = 722.2;
     class Timer {
         interval: null | ReturnType<typeof setInterval> | null;
         duration: number | null;
@@ -53,13 +55,29 @@ const worker = () => {
         tick() {
             const message: MessageTick = {
                 event: "tick",
-                payload: this.countdown,
+                payload: {
+                    countDown: this.countdown,
+                    icon: this.generateIcon(),
+                },
             };
             self.postMessage(message);
 
             if (this.countdown <= 0) {
                 this.stopTimer();
             }
+        }
+
+        generateIcon() {
+            const svg = `data:image/svg+xml;base64,${btoa(` 
+        <svg width="250" height="250" viewBox="-31.25 -31.25 312.5 312.5" version="1.1" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(-90deg)">
+            <circle r="115" cx="125" cy="125" fill="transparent" stroke="#00394d" stroke-width="50" stroke-dasharray="722.2px" stroke-dashoffset="0"></circle>
+            <circle r="115" cx="125" cy="125" stroke="#00bfff" stroke-width="33" stroke-linecap="butt" stroke-dashoffset="${
+                fullStrokeDashOffset -
+                fullStrokeDashOffset * (this.percentage / 100)
+            }px" fill="transparent" stroke-dasharray="722.2px"></circle>
+        </svg>
+        `)}`;
+            return svg;
         }
 
         get countdown() {
@@ -114,3 +132,17 @@ const blobWorker = new Blob(
 );
 
 export default blobWorker;
+
+// useEffect(() => {
+//     if (!isTimerRunning) {
+//         changeTabTile();
+//         changeTabIcon();
+//     } else {
+//         changeTabTile(`${remainingTimeFormatted} Pomodoro`);
+//         const percentage = (1 - remainingTime / time) * 100;
+//         const svg = `data:image/svg+xml;base64,${btoa(
+//             LoadingSpinner(percentage)
+//         )}`;
+//         changeTabIcon(svg);
+//     }
+// }, [remainingTimeFormatted, isTimerRunning, remainingTime]);

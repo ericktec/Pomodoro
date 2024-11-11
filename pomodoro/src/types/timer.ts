@@ -45,7 +45,10 @@ export type MessageReady = {
 
 export type MessageTick = {
     event: "tick";
-    payload: number;
+    payload: {
+        countDown: number;
+        icon: string;
+    };
 };
 
 export type StopTimerMessage = {
