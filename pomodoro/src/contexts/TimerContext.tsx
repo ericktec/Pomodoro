@@ -3,6 +3,7 @@ import {
     PropsWithChildren,
     useRef,
     useEffect,
+    useLayoutEffect,
     useState,
     useMemo,
     useCallback,
@@ -16,27 +17,34 @@ import LoadingSpinner from "../components/loadingSpinner/LoadingSpinner";
 
 import timerWorker from "../workers/timer.worker";
 import {
+    concentrationProfiles,
     SetupTimerMessage,
     StartTimerMessage,
     StopTimerMessage,
     TimerContextDispatchersValue,
     TimerContextValue,
+    TimerProfile,
     TimerTypes,
     TimerWorkerMessage,
 } from "../types/timer";
+import { storeTimeProfileToLocalStorage } from "../utils/saveTimeSettings";
 
 export const TimerContext = createContext<TimerContextValue>({
     isTimerRunning: false,
     remainingTime: 0,
     timerWorkerRef: null,
     remainingTimeFormatted: "00:00",
+    concentrationProfile: {
+        title: "Default",
+        breakTime: 10,
+        longBreak: 5,
+        workTime: 60,
+    },
 });
 
 export const TimerControllersContext =
     createContext<TimerContextDispatchersValue>({
-        setRestTime: () => {},
-        setWorkingTime: () => {},
-        setLongRestTime: () => {},
+        setTimerProfile: () => {},
         startTimer: () => {},
         stopTimer: () => {},
     });
@@ -59,17 +67,26 @@ const setupTimer = (
 
 type Props = {} & PropsWithChildren;
 const TimerProvider = ({ children }: Props) => {
-    const [workTime, setWorkTime] = useState(
-        Number(localStorage.getItem("workTime") ?? 20 * 60)
-    );
-    const [breakTime, setBreakTime] = useState(
-        Number(localStorage.getItem("breakTime") ?? 60 * 5)
-    );
-    const [longBreakTime, setLongBreakTime] = useState(
-        Number(localStorage.getItem("longBreakTime") ?? 60 * 15)
-    );
+    const [concentrationProfile, setConcentrationProfile] =
+        useState<TimerProfile>(() => {
+            const profileFromLocalStorage =
+                localStorage.getItem("timerProfile");
+            if (profileFromLocalStorage) {
+                const profileJson: TimerProfile = JSON.parse(
+                    profileFromLocalStorage
+                );
+                profileJson.workTime = Number(profileJson.workTime);
+                profileJson.breakTime = Number(profileJson.breakTime);
+                profileJson.longBreak = Number(profileJson.longBreak);
 
-    const [remainingTime, setRemainingTime] = useState(workTime);
+                return profileJson;
+            }
+            return concentrationProfiles[0];
+        });
+
+    const [remainingTime, setRemainingTime] = useState(
+        concentrationProfile.workTime * 60
+    );
 
     const [isTimerRunning, setIsTimerRunning] = useState(false);
 
@@ -84,7 +101,7 @@ const TimerProvider = ({ children }: Props) => {
 
     const timerWorkerRef = useRef<null | Worker>(null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         let urlWorker = URL.createObjectURL(timerWorker);
         timerWorkerRef.current = new Worker(urlWorker);
 
@@ -113,20 +130,25 @@ const TimerProvider = ({ children }: Props) => {
             receiveMessageFromTimerWorker
         );
 
-        const initialMessage: SetupTimerMessage = {
-            event: "setupTimer",
-            payload: {
-                duration: Number(localStorage.getItem("workTime") ?? 20 * 60),
-                type: "pomodoroPeriod",
-            },
-        };
-        timerWorkerRef.current.postMessage(initialMessage);
-
         return () => {
             timerWorkerRef.current?.terminate();
             URL.revokeObjectURL(urlWorker);
         };
     }, []);
+
+    useEffect(() => {
+        if (!timerWorkerRef.current) return;
+
+        const initialMessage: SetupTimerMessage = {
+            event: "setupTimer",
+            payload: {
+                duration: concentrationProfile.workTime * 60,
+                type: "pomodoroPeriod",
+            },
+        };
+
+        timerWorkerRef.current.postMessage(initialMessage);
+    }, [concentrationProfile]);
 
     const remainingTimeFormatted = useMemo<string>(() => {
         const minutes = String(Math.floor(remainingTime / 60)).padStart(2, "0");
@@ -149,34 +171,20 @@ const TimerProvider = ({ children }: Props) => {
     //     }
     // }, [remainingTimeFormatted, isTimerRunning, remainingTime]);
 
-    const setRestTime = useCallback(
-        (time: number) => {
-            if (time > 0 && time < 60 * 100 && !isTimerRunning) {
-                setBreakTime(time);
-                localStorage.setItem("breakTime", time.toString());
-            }
-        },
-        [isTimerRunning]
-    );
-
-    const setLongRestTime = useCallback(
-        (time: number) => {
-            if (time > 0 && time < 60 * 100 && !isTimerRunning) {
-                setLongBreakTime(time);
-                localStorage.setItem("longBreak", time.toString());
-            }
-        },
-        [isTimerRunning]
-    );
-
     const timerContextValue = useMemo(
         () => ({
             remainingTime,
             isTimerRunning,
-            timerWorkerRef,
             remainingTimeFormatted,
+            concentrationProfile,
+            timerWorkerRef,
         }),
-        [remainingTime, remainingTimeFormatted, isTimerRunning]
+        [
+            remainingTime,
+            remainingTimeFormatted,
+            isTimerRunning,
+            concentrationProfile,
+        ]
     );
 
     const startTimer = useCallback(() => {
@@ -197,51 +205,37 @@ const TimerProvider = ({ children }: Props) => {
 
         switch (periodType) {
             case "pomodoroPeriod":
-                setRemainingTime(workTime);
+                setRemainingTime(concentrationProfile.workTime * 60);
                 break;
 
             case "break":
-                setRemainingTime(breakTime);
+                setRemainingTime(concentrationProfile.breakTime * 60);
                 break;
 
             case "longBreak":
-                setRemainingTime(longBreakTime);
+                setRemainingTime(concentrationProfile.longBreak * 60);
                 break;
 
             default:
                 break;
         }
-    }, [periodType, longBreakTime, workTime, breakTime]);
+    }, [periodType, concentrationProfile]);
 
-    const setWorkingTime = useCallback(
-        (time: number) => {
-            if (
-                time > 0 &&
-                time < 60 * 100 &&
-                !isTimerRunning &&
-                timerWorkerRef.current
-            ) {
-                setWorkTime(time);
-                localStorage.setItem("workTime", time.toString());
-                if (periodType === "pomodoroPeriod") {
-                    setRemainingTime(time);
-                    setupTimer(periodType, timerWorkerRef.current, time);
-                }
-            }
-        },
-        [isTimerRunning, periodType]
-    );
+    const setTimerProfile = useCallback((profile: TimerProfile) => {
+        setConcentrationProfile(profile);
+        storeTimeProfileToLocalStorage(profile);
+        setRemainingTime(profile.workTime * 60);
+        setPeriodType("pomodoroPeriod");
+    }, []);
 
     const timerDispatchersContextValue = useMemo(
         () => ({
-            setWorkingTime,
-            setRestTime,
-            setLongRestTime,
             startTimer,
             setupTimer,
             stopTimer,
+            setTimerProfile,
         }),
-        [setWorkingTime, setLongRestTime, startTimer, setRestTime, stopTimer]
+        [startTimer, stopTimer, setTimerProfile]
     );
 
     return (

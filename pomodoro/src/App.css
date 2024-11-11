@@ -3,9 +3,12 @@
     --background-hover-secondary: rgba(146, 146, 146, 0.2);
     --text-main: rgb(237, 236, 236);
     --text-secondary: rgb(40, 37, 37);
+    --text-disabled: rgb(139, 139, 139);
     --background-hover: rgba(213, 213, 213, 0.1);
     --background-high-contrast: rgb(0,0,0);
     --btn-border-primary: rgb(255, 255, 255);
+    --border-primary: rgb(0,0,0);
+    --radio-button-selected: rgb(0,0,0);
     --font-border:  -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 

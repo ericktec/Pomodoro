@@ -32,6 +32,8 @@
 }
 
 .menu {
+    max-height: 100vh;
+    overflow: auto;
     min-width: 20vw;
     width: 40rem;
     max-width: 80vw;
@@ -116,6 +118,16 @@
     cursor: pointer;
     display: flex;
     align-items: center;
+}
+
+.menu__timerOptionsElement__timerRunning {
+    cursor: not-allowed;
+    color: var(--text-disabled);
+}
+
+.menu__timerOptionsElement__timerRunning-description {
+    font-size: 1.5rem;
+    font-weight: normal;
 }
 
 .menu__element {

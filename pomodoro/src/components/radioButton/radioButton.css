@@ -2,21 +2,33 @@
     display: none;
 }
 
-
 .radioButton {
+    cursor: pointer;
+    position: relative;
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 100%;
+    border: 1px solid var(--border-primary);
+    transition: transform 0.2s linear;
 }
 
 .radioButton::after {
+    position: absolute;
     content: "";
     display: block;
-    background-color: red;
-    width: 90%;
+    width: 80%;
+    height: 80%;
     border-radius: 100%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
 }
 
 .radioButtonInput:checked ~ .radioButton::after {
-    background-color: red;
+    background-color: var(--radio-button-selected);
+}
+
+
+.radioButton:active {
+    transform: scale(0.8);
 }
