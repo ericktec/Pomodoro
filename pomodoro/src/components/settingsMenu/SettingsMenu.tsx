@@ -32,7 +32,10 @@ const SettingsMenu = ({ setTabSelected }: Props) => {
                         )}
                     </span>
                 </li>
-                <li className="menu__timerOptionsElement">
+                <li
+                    className="menu__timerOptionsElement"
+                    onClick={() => setTabSelected("alarmSettings")}
+                >
                     <i className="icofont-alarm"></i>
                     Alarm
                 </li>

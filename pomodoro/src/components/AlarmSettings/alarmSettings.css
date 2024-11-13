@@ -1,0 +1,38 @@
+
+.alarmSettings__title {
+    margin-bottom: 1rem;
+}
+
+.alarmSettings__soundsList {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.alarmSettings__sound {
+    cursor: pointer;
+    background-color: var(--background-color-primary);
+    color: var(--text-secondary);
+    font-weight: normal;
+    transition: all 0.2s linear;
+    flex: 0 0 calc(33% - 0.5rem);
+    text-align: center;
+    font-size: 1.7rem;
+}
+
+.alarmSettings__sound-selected {
+    background-color: var(--background-high-contrast);
+    color: var(--text-main);
+}
+
+.alarmSettings__sound {
+    border: 1px solid var(--border-primary);
+    padding: 1rem;
+}
+
+.alarmsSettings__volumeLabel {
+    display: flex;
+    justify-content: space-between;
+}
