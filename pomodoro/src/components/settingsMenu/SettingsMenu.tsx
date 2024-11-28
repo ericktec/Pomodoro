@@ -40,7 +40,10 @@ const SettingsMenu = ({ setTabSelected }: Props) => {
                     Alarm
                 </li>
 
-                <li className="menu__timerOptionsElement">
+                <li
+                    className="menu__timerOptionsElement"
+                    onClick={() => setTabSelected("autoStart")}
+                >
                     <i className="icofont-redo"></i>
                     Auto Start
                 </li>

@@ -1,13 +1,9 @@
 import "./alarmSettings.css";
 import { FormEvent, useState, useRef } from "react";
 import SliderSelector from "../sliderSelector/SliderSelector";
-import { AlarmSettingsType } from "../../types/alarm";
+import { AlarmSettingsProfile, AlarmSettingsType } from "../../types/alarm";
 
-const alarms: Array<{
-    label: string;
-    iconClassName?: string;
-    soundPath: string | null;
-}> = [
+const alarms: Array<AlarmSettingsProfile> = [
     {
         label: "Alarm 1",
         soundPath: "alarms/alarm1.mp3",
@@ -32,10 +28,28 @@ const alarms: Array<{
 ];
 
 const AlarmSettings = () => {
-    const [alarmSettings, setAlarmSettings] = useState<AlarmSettingsType>({
-        soundPath: null,
-        volume: 60,
-    });
+    const [alarmSettings, setAlarmSettings] = useState<AlarmSettingsType>(
+        () => {
+            const preferredAlarmSettings =
+                localStorage.getItem("alarmSettings");
+
+            if (preferredAlarmSettings) {
+                const preferredAlarmSettingsJson: AlarmSettingsType =
+                    JSON.parse(preferredAlarmSettings);
+
+                preferredAlarmSettingsJson.volume = Number(
+                    preferredAlarmSettingsJson.volume
+                );
+
+                return preferredAlarmSettingsJson;
+            }
+
+            return {
+                soundPath: null,
+                volume: 60,
+            };
+        }
+    );
 
     const soundRef = useRef<HTMLAudioElement | null>(
         alarmSettings.soundPath ? new Audio(alarmSettings.soundPath) : null
@@ -61,6 +75,9 @@ const AlarmSettings = () => {
                 });
             };
         }
+
+        const settings = JSON.stringify(alarmSettings);
+        localStorage.setItem("alarmSettings", settings);
     };
 
     const onChangeSound = (soundPath: string | null) => {
@@ -83,10 +100,17 @@ const AlarmSettings = () => {
                 if (soundRef.current) soundRef.current.pause();
                 soundRef.current = null;
             }
-            return {
+            const newSoundProfile = {
                 ...prevValue,
                 soundPath: soundPath,
             };
+
+            localStorage.setItem(
+                "alarmSettings",
+                JSON.stringify(newSoundProfile)
+            );
+
+            return newSoundProfile;
         });
     };
 

@@ -1,0 +1,40 @@
+:root {
+    --switcher-background-color: rgb(193, 193, 193);
+    --switcher-background-color-active: rgb(41, 35, 35);
+    --switcher-slide-background-color: rgb(255,255,255);
+}
+
+.switcher-input {
+    display: none;
+}
+
+.switcher {
+    position: relative;
+    width: 7rem;
+    height: 2em;
+    border-radius: 5rem;
+    background-color: var(--switcher-background-color);
+    transition: all linear 0.1s;
+}
+
+.switcher::before {
+    position: absolute;
+    top: 50%;
+    left: 1%;
+    content: "";
+    display: block;
+    width: 40%;
+    height: 90%;
+    border-radius: 100%;
+    transform: translateY(-50%);
+    background-color: var(--switcher-slide-background-color);
+    transition: left 0.1s ease-in;
+}
+
+.switcher-input:checked ~ .switcher::before {
+    left: 59%;
+}
+
+.switcher-input:checked ~ .switcher {
+    background-color: var(--switcher-background-color-active);
+}

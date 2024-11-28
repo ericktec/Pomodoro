@@ -1,0 +1,12 @@
+.autoStartSettings__inputContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+
+.autoStartSettings__inputContainer:not(:last-child) {
+    margin-bottom: 2rem;
+}

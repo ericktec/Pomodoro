@@ -5,12 +5,14 @@ import BackgroundPicker from "../backgroundPicker/BackgroundPicker";
 import ConcentrationTimeSettings from "../concentrationTimeSettings/ConcentrationTimeSettings";
 import { TabSelected } from "../../types/settingsMenu";
 import AlarmSettings from "../AlarmSettings/AlarmSettings";
+import AutoStartSettings from "../autoStartSettings/AutoStartSettings";
 
 const tabsTitles: { [key in TabSelected]: string } = {
     settings: "Settings",
     backgroundPicker: "Background",
     concentrationTimeSettings: "Concentration Time",
     alarmSettings: "Alarm",
+    autoStart: "Auto Start",
 };
 
 type Props = {
@@ -65,6 +67,7 @@ const TimerSettings = ({ className, onCloseMenuHandler }: Props) => {
                     <ConcentrationTimeSettings />
                 )}
                 {tabSelected === "alarmSettings" && <AlarmSettings />}
+                {tabSelected === "autoStart" && <AutoStartSettings />}
             </section>
         </menu>
     );
