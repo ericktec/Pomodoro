@@ -48,7 +48,10 @@ const SettingsMenu = ({ setTabSelected }: Props) => {
                     Auto Start
                 </li>
 
-                <li className="menu__timerOptionsElement">
+                <li
+                    className="menu__timerOptionsElement"
+                    onClick={() => setTabSelected("notifications")}
+                >
                     <i className="icofont-duotone icofont-notification-circle"></i>
                     Notifications
                 </li>

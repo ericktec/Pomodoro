@@ -5,6 +5,19 @@ const createNotification = (notificationText: string) => {
     });
 };
 
+export const askNotificationPermissions = async (): Promise<boolean> => {
+    if (!("Notification" in window)) return false;
+    if (
+        Notification.permission === "default" ||
+        Notification.permission === "denied"
+    ) {
+        const notificationResponse = await Notification.requestPermission();
+        if (notificationResponse === "denied") return false;
+        return true;
+    }
+    return true;
+};
+
 export const notifyUser = async (notificationText: string) => {
     if (!("Notification" in window)) return;
 

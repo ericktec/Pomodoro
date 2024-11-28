@@ -1,5 +1,4 @@
 /* eslint-disable no-restricted-globals */
-import LoadingSpinner from "../components/loadingSpinner/LoadingSpinner";
 import {
     MessageReady,
     MessageTick,
@@ -132,17 +131,3 @@ const blobWorker = new Blob(
 );
 
 export default blobWorker;
-
-// useEffect(() => {
-//     if (!isTimerRunning) {
-//         changeTabTile();
-//         changeTabIcon();
-//     } else {
-//         changeTabTile(`${remainingTimeFormatted} Pomodoro`);
-//         const percentage = (1 - remainingTime / time) * 100;
-//         const svg = `data:image/svg+xml;base64,${btoa(
-//             LoadingSpinner(percentage)
-//         )}`;
-//         changeTabIcon(svg);
-//     }
-// }, [remainingTimeFormatted, isTimerRunning, remainingTime]);

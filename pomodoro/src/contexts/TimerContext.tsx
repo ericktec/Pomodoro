@@ -91,13 +91,6 @@ const TimerProvider = ({ children }: Props) => {
 
     const [periodType, setPeriodType] = useState<TimerTypes>("pomodoroPeriod");
 
-    const [autoPlayBreaks, setAutoPlayBreaks] = useState(
-        Boolean(localStorage.getItem("autoPlayBreaks"))
-    );
-    const [autoPlayPomodoro, setAutoPlayPomodoro] = useState(
-        Boolean(localStorage.getItem("autoPlayPomodoro"))
-    );
-
     const timerWorkerRef = useRef<null | Worker>(null);
 
     useLayoutEffect(() => {

@@ -3,4 +3,5 @@ export type TabSelected =
     | "backgroundPicker"
     | "concentrationTimeSettings"
     | "alarmSettings"
-    | "autoStart";
+    | "autoStart"
+    | "notifications";
