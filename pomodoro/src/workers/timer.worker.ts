@@ -1,10 +1,9 @@
 /* eslint-disable no-restricted-globals */
 import {
-    MessageReady,
     MessageTick,
     SetupTimerMessage,
     StartTimerMessage,
-    TimerStoppedMessage,
+    TimerCompleted,
     TimerTypes,
     TimerWorkerMessage,
 } from "../types/timer";
@@ -62,6 +61,11 @@ const worker = () => {
             self.postMessage(message);
 
             if (this.countdown <= 0) {
+                const message: TimerCompleted = {
+                    event: "completed",
+                    payload: null,
+                };
+                self.postMessage(message);
                 this.stopTimer();
             }
         }

@@ -1,4 +1,5 @@
-import { Ref } from "react";
+import { FormEvent, Ref } from "react";
+import { AlarmSettingsType } from "./alarm";
 
 export type TimerProfile = {
     title: string;
@@ -13,12 +14,17 @@ export type TimerContextValue = {
     timerWorkerRef: Ref<null | Worker>;
     remainingTimeFormatted: string;
     concentrationProfile: TimerProfile;
+    alarmSettings: AlarmSettingsType;
+    periodType: TimerTypes;
 };
 
 export type TimerContextDispatchersValue = {
     startTimer: () => void;
     stopTimer: () => void;
     setTimerProfile: (timerProfile: TimerProfile) => void;
+    onChangeVolume: (event: FormEvent<HTMLInputElement>) => void;
+    onChangeVolumeFinish: () => void;
+    onChangeSound: (soundPath: string | null) => void;
 };
 
 // Communication to worker
@@ -99,3 +105,9 @@ export const concentrationProfiles: Array<TimerProfile> = [
         longBreak: 10,
     },
 ];
+
+export type TimerCountersType = {
+    pomodoros: number;
+    breaks: number;
+    longBreaks: number;
+};

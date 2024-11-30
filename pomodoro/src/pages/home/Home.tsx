@@ -9,10 +9,11 @@ import HomeMenu from "../../components/homeMenu/HomeMenu";
 import HomeBackGroundContext from "../../contexts/HomeBackgroundContext";
 
 const Home = () => {
-    const { remainingTimeFormatted } = useContext(TimerContext);
+    const { remainingTimeFormatted, periodType } = useContext(TimerContext);
     const [background, setBackground] = useState<BackgroundTypes>(() => {
         const backgroundStoreInLocalStorage =
             localStorage.getItem("background");
+
         if (backgroundStoreInLocalStorage) {
             return JSON.parse(backgroundStoreInLocalStorage);
         }
@@ -35,14 +36,19 @@ const Home = () => {
         [setHomeBackground]
     );
 
-    return (
-        <div
-            className={`home 
+    let homeBackground: string;
+    if (periodType !== "pomodoroPeriod") {
+        homeBackground = "home__background-vine";
+    } else {
+        homeBackground = `
                 ${background.type === "image" ? "home__overlay" : ""}
                 ${background.type === "gradient" ? background.className : ""}
-                `}
-        >
-            {background.type === "image" && (
+        `;
+    }
+
+    return (
+        <div className={`home ${homeBackground}`}>
+            {background.type === "image" && periodType === "pomodoroPeriod" && (
                 <img
                     className="home__background"
                     src={background.path}

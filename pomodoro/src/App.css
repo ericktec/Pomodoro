@@ -73,7 +73,6 @@ html {
     background: linear-gradient(356deg, rgba(36,9,121,1) 0%, rgba(72,12,130,1) 50%, rgba(69,3,84,1) 100%);
 }
 
-
 .home__background-turquoise-flow {
     background: #136a8a;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #267871, #136a8a);  /* Chrome 10-25, Safari 5.1-6 */
