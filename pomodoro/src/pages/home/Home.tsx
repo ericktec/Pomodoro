@@ -55,6 +55,7 @@ const Home = () => {
                     alt="background"
                 />
             )}
+
             <div className="home__header">
                 <p className="home__username">{"Erick"}</p>
                 <PomodoroCounters />

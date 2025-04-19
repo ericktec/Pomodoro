@@ -86,7 +86,7 @@ const CustomConcentrationTimeSetting = ({
                 id="customProfile"
                 value="customProfile"
                 checked={!disabled}
-                onChange={(event) =>
+                onChange={() =>
                     onConcentrationProfileChange({
                         title: customTimeProfile.title,
                         workTime: customTimeProfile.workTime,
@@ -109,7 +109,8 @@ const CustomConcentrationTimeSetting = ({
                             </p>
                             <SliderSelector
                                 className="concentrationTimesSettings__custom-slider"
-                                min={1}
+                                // TODO: Remove 0.1 limit
+                                min={0.1}
                                 max={120}
                                 value={customTimeProfile[slider.type]}
                                 onChange={(event) =>

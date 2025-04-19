@@ -8,24 +8,24 @@ type PomodoroCounterItem = {
 };
 
 const PomodoroCounters = () => {
-    const { isTimerRunning } = useContext(TimerContext);
+    const { isTimerRunning, pomodoroCounters } = useContext(TimerContext);
 
     const counters = useMemo<Array<PomodoroCounterItem>>(() => {
         return [
             {
-                count: 0,
+                count: pomodoroCounters.pomodoros,
                 label: "Pomodoro",
             },
             {
-                count: 0,
+                count: pomodoroCounters.breaks,
                 label: "Breaks",
             },
             {
-                count: 0,
+                count: pomodoroCounters.longBreaks,
                 label: "Long Breaks",
             },
         ];
-    }, []);
+    }, [pomodoroCounters]);
 
     return (
         <div className="pomodoro__counters">

@@ -4,13 +4,12 @@ import {
     useRef,
     useEffect,
     useLayoutEffect,
-    useState,
     useMemo,
     useCallback,
 } from "react";
 import {
     changeTabIcon,
-    changeTabTile,
+    changeTabTitle,
     notifyUser,
 } from "../utils/notifications";
 
@@ -43,6 +42,11 @@ export const TimerContext = createContext<TimerContextValue>({
         soundPath: null,
         volume: 0,
     },
+    pomodoroCounters: {
+        breaks: 0,
+        longBreaks: 0,
+        pomodoros: 0
+    }
 });
 
 export const TimerControllersContext =
@@ -90,6 +94,7 @@ const TimerProvider = ({ children }: Props) => {
         isTimerRunning,
         setIsTimerRunning,
         incrementPomodoroCounter,
+        pomodoroCounters
     } = useTimerProfile();
 
     const timerWorkerRef = useRef<null | Worker>(null);
@@ -154,26 +159,6 @@ const TimerProvider = ({ children }: Props) => {
         timerWorkerRef.current.postMessage(initialMessage);
     }, [periodType, concentrationProfile, setRemainingTime]);
 
-    const timerContextValue = useMemo(
-        () => ({
-            remainingTime,
-            isTimerRunning,
-            remainingTimeFormatted,
-            concentrationProfile,
-            timerWorkerRef,
-            alarmSettings,
-            periodType,
-        }),
-        [
-            remainingTime,
-            remainingTimeFormatted,
-            isTimerRunning,
-            concentrationProfile,
-            alarmSettings,
-            periodType,
-        ]
-    );
-
     const startTimer = useCallback(() => {
         const message: StartTimerMessage = {
             event: "startTimer",
@@ -207,6 +192,29 @@ const TimerProvider = ({ children }: Props) => {
                 break;
         }
     }, [periodType, concentrationProfile, setRemainingTime, setIsTimerRunning]);
+
+
+    const timerContextValue = useMemo<TimerContextValue>(
+        () => ({
+            remainingTime,
+            isTimerRunning,
+            remainingTimeFormatted,
+            concentrationProfile,
+            timerWorkerRef,
+            alarmSettings,
+            periodType,
+            pomodoroCounters
+        }),
+        [
+            remainingTime,
+            remainingTimeFormatted,
+            isTimerRunning,
+            concentrationProfile,
+            alarmSettings,
+            periodType,
+            pomodoroCounters
+        ]
+    );
 
     const timerDispatchersContextValue = useMemo(
         () => ({

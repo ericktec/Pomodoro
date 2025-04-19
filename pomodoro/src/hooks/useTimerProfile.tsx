@@ -7,7 +7,7 @@ import {
     TimerTypes,
 } from "../types/timer";
 
-import { changeTabIcon, changeTabTile } from "../utils/notifications";
+import { changeTabIcon, changeTabTitle } from "../utils/notifications";
 
 const useTimerProfile = () => {
     const [concentrationProfile, setConcentrationProfile] =
@@ -81,9 +81,9 @@ const useTimerProfile = () => {
     useEffect(() => {
         if (isTimerRunning) {
             // Here we call the remaining time formatted to avoid recreating the worker
-            changeTabTile(remainingTimeFormatted);
+            changeTabTitle(remainingTimeFormatted);
         } else {
-            changeTabTile();
+            changeTabTitle();
             changeTabIcon();
         }
     }, [remainingTimeFormatted, isTimerRunning]);
@@ -98,6 +98,7 @@ const useTimerProfile = () => {
         isTimerRunning,
         setIsTimerRunning,
         incrementPomodoroCounter,
+        pomodoroCounters: counters 
     };
 };
 

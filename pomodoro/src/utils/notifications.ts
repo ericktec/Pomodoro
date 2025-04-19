@@ -40,7 +40,7 @@ export const notifyUser = async (notificationText: string) => {
     }
 };
 
-export const changeTabTile = (tabTitle: string = "Pomodoro Timer") => {
+export const changeTabTitle = (tabTitle: string = "Pomodoro Timer") => {
     document.title = tabTitle;
 };
 

@@ -16,6 +16,7 @@ export type TimerContextValue = {
     concentrationProfile: TimerProfile;
     alarmSettings: AlarmSettingsType;
     periodType: TimerTypes;
+    pomodoroCounters: TimerCountersType
 };
 
 export type TimerContextDispatchersValue = {
