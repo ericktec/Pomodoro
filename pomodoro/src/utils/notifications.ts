@@ -1,3 +1,5 @@
+import { AlarmSettingsType } from "../types/alarm";
+
 const createNotification = (notificationText: string) => {
     return new Notification("Pomodoro!", {
         body: notificationText,
@@ -13,12 +15,14 @@ export const askNotificationPermissions = async (): Promise<boolean> => {
     ) {
         const notificationResponse = await Notification.requestPermission();
         if (notificationResponse === "denied") return false;
-        return true;
     }
     return true;
 };
 
-export const notifyUser = async (notificationText: string) => {
+export const notifyUser = async (
+    notificationText: string,
+    alarmSettings: AlarmSettingsType
+) => {
     if (!("Notification" in window)) return;
 
     let notification: Notification | null = null;
@@ -30,14 +34,20 @@ export const notifyUser = async (notificationText: string) => {
             notification = createNotification(notificationText);
         }
     }
+    if (!notification) return;
 
-    if (notification) {
-        setTimeout(() => {
-            if (notification) {
-                notification.close();
-            }
-        }, 5000);
+    debugger;
+    if (alarmSettings.soundPath) {
+        const audio = new Audio(alarmSettings.soundPath);
+        audio.volume = alarmSettings.volume / 100;
+        audio.play();
     }
+
+    setTimeout(() => {
+        if (notification) {
+            notification.close();
+        }
+    }, 5000);
 };
 
 export const changeTabTitle = (tabTitle: string = "Pomodoro Timer") => {

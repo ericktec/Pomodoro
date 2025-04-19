@@ -93,6 +93,7 @@ const useTimerProfile = () => {
         setTimerProfile,
         remainingTime,
         periodType,
+        setPeriodType,
         setRemainingTime,
         remainingTimeFormatted,
         isTimerRunning,

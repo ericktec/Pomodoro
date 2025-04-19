@@ -7,11 +7,7 @@ import {
     useMemo,
     useCallback,
 } from "react";
-import {
-    changeTabIcon,
-    changeTabTitle,
-    notifyUser,
-} from "../utils/notifications";
+import { changeTabIcon, notifyUser } from "../utils/notifications";
 
 import timerWorker from "../workers/timer.worker";
 import {
@@ -31,6 +27,7 @@ export const TimerContext = createContext<TimerContextValue>({
     remainingTime: 0,
     timerWorkerRef: null,
     periodType: "pomodoroPeriod",
+    setPeriodType: () => {},
     remainingTimeFormatted: "00:00",
     concentrationProfile: {
         title: "Default",
@@ -45,8 +42,8 @@ export const TimerContext = createContext<TimerContextValue>({
     pomodoroCounters: {
         breaks: 0,
         longBreaks: 0,
-        pomodoros: 0
-    }
+        pomodoros: 0,
+    },
 });
 
 export const TimerControllersContext =
@@ -86,6 +83,7 @@ const TimerProvider = ({ children }: Props) => {
 
     const {
         periodType,
+        setPeriodType,
         remainingTime,
         setTimerProfile,
         concentrationProfile,
@@ -94,7 +92,7 @@ const TimerProvider = ({ children }: Props) => {
         isTimerRunning,
         setIsTimerRunning,
         incrementPomodoroCounter,
-        pomodoroCounters
+        pomodoroCounters,
     } = useTimerProfile();
 
     const timerWorkerRef = useRef<null | Worker>(null);
@@ -115,6 +113,7 @@ const TimerProvider = ({ children }: Props) => {
 
                 case "completed": {
                     setIsTimerRunning(false);
+                    notifyUser("Time it's over", alarmSettings);
                     incrementPomodoroCounter();
                     break;
                 }
@@ -193,7 +192,6 @@ const TimerProvider = ({ children }: Props) => {
         }
     }, [periodType, concentrationProfile, setRemainingTime, setIsTimerRunning]);
 
-
     const timerContextValue = useMemo<TimerContextValue>(
         () => ({
             remainingTime,
@@ -203,7 +201,8 @@ const TimerProvider = ({ children }: Props) => {
             timerWorkerRef,
             alarmSettings,
             periodType,
-            pomodoroCounters
+            setPeriodType,
+            pomodoroCounters,
         }),
         [
             remainingTime,
@@ -212,7 +211,7 @@ const TimerProvider = ({ children }: Props) => {
             concentrationProfile,
             alarmSettings,
             periodType,
-            pomodoroCounters
+            pomodoroCounters,
         ]
     );
 

@@ -1,4 +1,4 @@
-import { FormEvent, Ref } from "react";
+import { Dispatch, FormEvent, Ref, SetStateAction } from "react";
 import { AlarmSettingsType } from "./alarm";
 
 export type TimerProfile = {
@@ -16,6 +16,7 @@ export type TimerContextValue = {
     concentrationProfile: TimerProfile;
     alarmSettings: AlarmSettingsType;
     periodType: TimerTypes;
+    setPeriodType: Dispatch<SetStateAction<TimerTypes>>
     pomodoroCounters: TimerCountersType
 };
 
