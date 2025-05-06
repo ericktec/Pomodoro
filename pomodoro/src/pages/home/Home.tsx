@@ -1,4 +1,11 @@
-import { useCallback, useMemo, useContext, useEffect, useState } from "react";
+import {
+    useCallback,
+    useMemo,
+    useContext,
+    useEffect,
+    useState,
+    useRef,
+} from "react";
 import PomodoroCounters from "../../components/pomodoroCounters/PomodoroCounters";
 import Timer from "../../components/timer/Timer";
 import TimerControllers from "../../components/timerControllers/TimerControllers";
@@ -7,6 +14,8 @@ import { TimerContext } from "../../contexts/TimerContext";
 import { BackgroundTypes } from "../../types/backgrounds";
 import HomeMenu from "../../components/homeMenu/HomeMenu";
 import HomeBackGroundContext from "../../contexts/HomeBackgroundContext";
+import Drawer, { DrawerHandle } from "../../components/drawer/Drawer";
+import MusicPlayer from "../../components/musicPlayer/MusicPlayer";
 
 const Home = () => {
     const { remainingTimeFormatted, periodType } = useContext(TimerContext);
@@ -35,6 +44,16 @@ const Home = () => {
         }),
         [setHomeBackground]
     );
+
+    const musicDrawerRef = useRef<DrawerHandle>(null);
+
+    const openMusicDrawer = () => {
+        musicDrawerRef.current?.open();
+    };
+
+    const closeMusicDrawer = () => {
+        musicDrawerRef.current?.close();
+    };
 
     let homeBackground: string;
     if (periodType !== "pomodoroPeriod") {
@@ -69,6 +88,10 @@ const Home = () => {
             />
             <p className="home__mantra">This is a mantra</p>
             <TimerControllers className="home__timer-controllers" />
+
+            <Drawer title="Music" ref={musicDrawerRef}>
+                <MusicPlayer />
+            </Drawer>
         </div>
     );
 };

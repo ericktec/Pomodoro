@@ -1,0 +1,30 @@
+.carouselContainer  {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+}
+
+.carouselContainer__children {
+    width: 100%;
+    display: flex;
+    gap: 25px;
+}
+
+.carousel__controller-right,
+.carousel__controller-left,
+.carousel__controller {
+    background-color: var(--background-high-contrast);
+    color: var(--text-main);
+    padding: 2rem 2.5rem;
+    border-radius: 50%;
+    font-size: 2.5rem;
+}
+
+.carousel__controller-left {
+    left: 0;
+}
+
+.carousel__controller-right {
+ right: 0;
+}

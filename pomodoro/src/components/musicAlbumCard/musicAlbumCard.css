@@ -1,0 +1,24 @@
+.musicAlbumCard,
+.musicAlbumCard__image {
+
+    border-radius: 2rem;
+}
+
+.musicAlbumCard {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 1.5rem;
+    transition: background-color 0.5s ease;
+    align-items: center;
+}
+
+.musicAlbumCard:hover {
+    background-color: var(--background-hover-secondary);
+}
+
+.musicAlbumCard__title {
+    font-size: 1.6rem;
+    font-weight: 700;
+}

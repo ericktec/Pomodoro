@@ -1,0 +1,16 @@
+.drawer {
+    height: 90vh;
+    max-height: 90vh;
+    position: fixed;
+    padding: 5rem;
+    color: var(--text-secondary);
+    background-color: var(--background-color-primary);
+    bottom: 0;
+    width: 80vw;
+}
+
+.drawer__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

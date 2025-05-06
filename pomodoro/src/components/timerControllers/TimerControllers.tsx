@@ -10,6 +10,7 @@ type Props = {} & HTMLProps<HTMLDivElement>;
 const TimerControllers = ({ ...props }: Props) => {
     const { startTimer, stopTimer } = useContext(TimerControllersContext);
     const { isTimerRunning } = useContext(TimerContext);
+
     return (
         <div {...props}>
             <button className="timerController__btn timerController__btn-secondary">
