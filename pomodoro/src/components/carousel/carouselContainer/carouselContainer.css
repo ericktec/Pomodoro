@@ -5,21 +5,43 @@
     gap: 1rem;
 }
 
-.carouselContainer__children {
-    width: 100%;
-    display: flex;
-    gap: 25px;
+.carouselContainer__overflow {
+    overflow-x: hidden;
+    flex-basis: 100%;
 }
 
-.carousel__controller-right,
-.carousel__controller-left,
+.carouselContainer__children {
+    display: flex;
+    transition: transform 0.5s linear;
+    width: fit-content;
+}
+
+.child__container {
+    flex: 0 0 auto;
+}
+
+.carousel__controller-hidden,
 .carousel__controller {
-    background-color: var(--background-high-contrast);
-    color: var(--text-main);
     padding: 2rem 2.5rem;
     border-radius: 50%;
     font-size: 2.5rem;
+    transition: transform 0.2s linear;
 }
+
+.carousel__controller {
+    background-color: var(--background-high-contrast);
+    color: var(--text-main);
+    cursor: pointer;
+}
+
+.carousel__controller:hover {
+    transform: scale(1.1);
+}
+
+.carousel__controller:active {
+    transform: scale(0.8);
+}
+
 
 .carousel__controller-left {
     left: 0;

@@ -9,28 +9,7 @@ type Props = {
 const MusicPlayer = ({ className }: Props) => {
     return (
         <section className={`musicPlayer ${className ?? ""}`}>
-            <Carousel className="musicPlayer__carousel">
-                <Carousel.Item>
-                    <MusicAlbumCard
-                        title="Test"
-                        image="https://picsum.photos/200"
-                        source="spotify"
-                    />
-                </Carousel.Item>
-                <Carousel.Item>
-                    <MusicAlbumCard
-                        title="Test"
-                        image="https://picsum.photos/200"
-                        source="spotify"
-                    />
-                </Carousel.Item>
-                <Carousel.Item>
-                    <MusicAlbumCard
-                        title="Test"
-                        image="https://picsum.photos/200"
-                        source="spotify"
-                    />
-                </Carousel.Item>
+            <Carousel className="musicPlayer__carousel" itemSizeInPixels={250}>
                 <Carousel.Item>
                     <MusicAlbumCard
                         title="Test"
