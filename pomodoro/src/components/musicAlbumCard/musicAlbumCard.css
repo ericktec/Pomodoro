@@ -1,10 +1,17 @@
 .musicAlbumCard,
 .musicAlbumCard__image {
-
     border-radius: 2rem;
+    height: 200px;
+    width: 200px;
+    overflow: hidden;
+    object-fit: cover;
 }
 
 .musicAlbumCard {
+    width: 250px;
+    max-height: 250px;
+    max-width: 250px;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;

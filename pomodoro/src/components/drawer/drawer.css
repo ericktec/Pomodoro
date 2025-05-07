@@ -7,6 +7,8 @@
     background-color: var(--background-color-primary);
     bottom: 0;
     width: 80vw;
+    border-top-left-radius: 5rem;
+    border-top-right-radius: 5rem;
 }
 
 .drawer__title {
